@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Graft, Korupsiyon, Political Laws – Exam Review Quiz</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; max-width: 700px; }
+  h1 { color: #3a6df0; }
+  .question { border-left: 4px solid #3a6df0; padding-left: 10px; margin-bottom: 20px; }
+  button { background-color: #3a6df0; color: white; border: none; padding: 10px 15px; margin-top: 15px; cursor: pointer; }
+  button:hover { background-color: #2b52c5; }
+  .footer { margin-top: 40px; font-size: 0.9em; color: #555; text-align: center; }
+  #editorToggleBtn {
+    font-size: 12px; padding: 5px 10px; margin-bottom: 20px; background: #28a745; border-radius: 4px; 
+  }
+  #editorPanel { 
+    border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; display: none;
+  }
+  #editorPanel input[type=text], #editorPanel textarea {
+    width: 100%; margin-bottom: 10px; padding: 5px;
+  }
+  #questionsContainer {
+    margin-bottom: 15px;
+  }
+  .edit-question {
+    border-left: 4px solid #f39c12; padding-left: 10px; margin-bottom: 15px;
+  }
+  .deleteQuestionBtn {
+    background-color: #d9534f;
+    border: none; color: white; padding: 5px 10px; cursor: pointer; margin-top: 5px;
+  }
+  .deleteQuestionBtn:hover {
+    background-color: #c9302c;
+  }
+</style>
+</head>
+<body>
+
+<h1>Graft, Korupsiyon, Political Laws – Exam Review Quiz</h1>
+
+<button id="editorToggleBtn">Enter Editor Mode</button>
+
+<div id="editorPanel">
+  <h3>Editor Mode - Add New Question</h3>
+  <label>Question Text:</label><br/>
+  <textarea id="newQuestionText" rows="3" placeholder="Enter question text here..."></textarea><br/>
+  <label>Option A:</label><br/>
+  <input type="text" id="newOptionA" placeholder="Option A" /><br/>
+  <label>Option B:</label><br/>
+  <input type="text" id="newOptionB" placeholder="Option B" /><br/>
+  <label>Option C:</label><br/>
+  <input type="text" id="newOptionC" placeholder="Option C" /><br/>
+  <label>Option D:</label><br/>
+  <input type="text" id="newOptionD" placeholder="Option D" /><br/>
+  <label>Correct Answer (A/B/C/D):</label><br/>
+  <input type="text" id="newCorrectAnswer" maxlength="1" placeholder="Enter A, B, C or D" /><br/>
+  <button id="addQuestionBtn">Add Question</button>
+</div>
+
+<form id="quizForm">
+  <div id="questionsContainer"></div>
+  <button type="button" id="submitBtn">Submit & Check Score</button>
+  <button type="button" id="tryAgainBtn" style="margin-left: 10px;">Try Again</button>
+</form>
+
+<div class="footer">[Experimental lang po ito for exams^^ -Nov/20/2025]</div>
+
+<script>
+  // Initial question set
+  let questions = [
+    {
+      question: "Aling batas ang para sa pagkumpiska ng ilegal na yaman?",
+      options: {
+        A: "RA 1379",
+        B: "RA 3019",
+        C: "PD 46",
+        D: "RA 7659"
+      },
+      correct: "A"
+    },
+    {
+      question: "Aling Executive Orders ang tumatalakay sa ill-gotten wealth nina Marcos?",
+      options: {
+        A: "EO 10, EO 23, EO 50",
+        B: "EO 1, EO 2, EO 14",
+        C: "EO 3, EO 4, EO 5",
+        D: "EO 6, EO 7, EO 8"
+      },
+      correct: "B"
+    },
+    {
+      question: "Ano ang RA 3019?",
+      options: {
+        A: "Anti-Graft Law",
+        B: "Plunder Law",
+        C: "Gift-Giving Decree",
+        D: "Ombudsman Act"
+      },
+      correct: "A"
+    },
+    {
+      question: "Ano ang PD 749?",
+      options: {
+        A: "Immunity for informants",
+        B: "Anti-Money Laundering",
+        C: "Code of Conduct",
+        D: "Plunder Law"
+      },
+      correct: "A"
+    },
+    {
+      question: "Ano ang RA 6770?",
+      options: {
+        A: "Ombudsman Act",
+        B: "Plunder Law",
+        C: "Anti-Money Laundering",
+        D: "Graft Law"
+      },
+      correct: "A"
+    },
+    {
+      question: "Ano ang RA 6713?",
+      options: {
+        A: "Code of Conduct and Ethical Standards",
+        B: "Anti-Graft Law",
+        C: "Plunder Law",
+        D: "Ombudsman Act"
+      },
+      correct: "A"
+    },
+    {
+      question: "Ano ang RA 7080?",
+      options: {
+        A: "Plunder Law",
+        B: "Code of Conduct",
+        C: "Money Laundering Law",
+        D: "Gift-Giving Decree"
+      },
+      correct: "A"
+    },
+    {
+      question: "Ano ang RA 9160?",
+      options: {
+        A: "Anti-Money Laundering Law",
+        B: "Plunder Law",
+        C: "Gift-Giving Decree",
+        D: "Code of Conduct"
+      },
+      correct: "A"
+    },
+    {
+      question: "Ano ang PD 46?",
+      options: {
+        A: "Gift-Giving Decree",
+        B: "Plunder Law",
+        C: "Code of Conduct",
+        D: "Anti-Money Laundering Law"
+      },
+      correct: "A"
+    },
+    {
+      question: "Ano ang ibig sabihin ng writ of mandamus?",
+      options: {
+        A: "Utos ng korte na pumigil sa gawaing lumalabag",
+        B: "Utos sa opisyal na gawin ang tungkulin",
+        C: "Pagsusuri ng hukuman",
+        D: "Pagpapakita sa korte ng nakakulong"
+      },
+      correct: "B"
+    }
+  ];
+
+  let editorEnabled = false;
+
+  const quizForm = document.getElementById("quizForm");
+  const questionsContainer = document.getElementById("questionsContainer");
+  const editorPanel = document.getElementById("editorPanel");
+  const editorToggleBtn = document.getElementById("editorToggleBtn");
+  const addQuestionBtn = document.getElementById("addQuestionBtn");
+
+  // Function to render questions in quiz and editor (with delete)
+  function renderQuestions() {
+    questionsContainer.innerHTML = "";
+    questions.forEach((q, index) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+      qDiv.id = "q" + (index + 1);
+      qDiv.innerHTML = `<strong>${index + 1}. ${q.question}</strong><br/>`;
+      for (const key of ["A","B","C","D"]) {
+        qDiv.innerHTML += `<label><input type="radio" name="q${index+1}" value="${key}"/> ${key}. ${q.options[key]}</label><br/>`;
+      }
+      if (editorEnabled) {
+        // Add delete button in editor mode
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Delete Question";
+        delBtn.type = "button";
+        delBtn.className = "deleteQuestionBtn";
+        delBtn.onclick = () => {
+          if(confirm(`Delete question ${index + 1}?`)) {
+            questions.splice(index, 1);
+            renderQuestions();
+          }
+        };
+        qDiv.appendChild(delBtn);
+      }
+      questionsContainer.appendChild(qDiv);
+    });
+  }
+
+  // Function to check answers and show score
+  function checkScore() {
+    let score = 0;
+    let total = questions.length;
+    for (let i = 0; i < total; i++) {
+      const selected = document.querySelector(`input[name="q${i+1}"]:checked`);
+      if (selected && selected.value === questions[i].correct) {
+        score++;
+      }
+    }
+    alert(`Your score is ${score} out of ${total}`);
+  }
+
+  // Function to reset form
+  function tryAgain() {
+    quizForm.reset();
+  }
+
+  // Toggle editor mode, prompt password
+  editorToggleBtn.addEventListener("click", () => {
+    if (!editorEnabled) {
+      const pw = prompt("Enter editor password:");
+      if (pw === "jg12") {
+        editorEnabled = true;
+        editorPanel.style.display = "block";
+        editorToggleBtn.textContent = "Exit Editor Mode";
+        renderQuestions();
+      } else {
+        alert("Incorrect password");
+      }
+    } else {
+      editorEnabled = false;
+      editorPanel.style.display = "none";
+      editorToggleBtn.textContent = "Enter Editor Mode";
+      renderQuestions();
+    }
+  });
+
+  // Add new question from editor inputs
+  addQuestionBtn.addEventListener("click", () => {
+    const qText = document.getElementById("newQuestionText").value.trim();
+    const a = document.getElementById("newOptionA").value.trim();
+    const b = document.getElementById("newOptionB").value.trim();
+    const c = document.getElementById("newOptionC").value.trim();
+    const d = document.getElementById("newOptionD").value.trim();
+    const correct = document.getElementById("newCorrectAnswer").value.trim().toUpperCase();
+
+    if (!qText || !a || !b || !c || !d || !["A","B","C","D"].includes(correct)) {
+      alert("Please fill all fields correctly and enter correct answer as A, B, C, or D.");
+      return;
+    }
+
+    questions.push({
+      question: qText,
+      options: { A: a, B: b, C: c, D: d },
+      correct: correct
+    });
+
+    // Clear input fields
+    document.getElementById("newQuestionText").value = "";
+    document.getElementById("newOptionA").value = "";
+    document.getElementById("newOptionB").value = "";
+    document.getElementById("newOptionC").value = "";
+    document.getElementById("newOptionD").value = "";
+    document.getElementById("newCorrectAnswer").value = "";
+
+    renderQuestions();
+  });
+
+  document.getElementById("submitBtn").addEventListener("click", checkScore);
+  document.getElementById("tryAgainBtn").addEventListener("click", tryAgain);
+
+  // Initial render
+  renderQuestions();
+
+</script>
+
+<div class="footer">[Experimental lang po ito for exams^^ -Nov/20/2025]</div>
+
+</body>
+</html>
